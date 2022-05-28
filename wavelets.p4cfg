@@ -1,0 +1,51 @@
+{
+        "tables": {
+                "ingress::tbl_direction": {
+                        "rules": [
+                                {
+                                        "action": {
+                                                "data": { "port": { "value": "p4" } },
+                                                "type": "ingress::act_forward"
+                                        },
+                                        "name": "direction_entry0",
+                                        "match": { "standard_metadata.ingress_port": { "value" : "p0" } }
+                                },
+                                {
+                                        "action": {
+                                                "data": { "port": { "value": "p0" } },
+                                                "type": "ingress::act_forward"
+                                        },
+                                        "name": "direction_entry1",
+                                        "match": { "standard_metadata.ingress_port": { "value" : "p4" } }                                }
+                        ]
+                },
+		"ingress::tbl_flows": {
+			"rules": [
+				{
+					"action": {
+						"data": { 
+							"index": { "value": "0" },
+						 },
+						"type": "ingress::act_tag"		
+					},
+					"name": "flows_entry0",
+					"match": { 
+						"ipv4.dst": { 
+							"value": "0xc0a80c01", 
+							"mask": "0xFFFFFFFF" 
+						},
+						"ipv4.src": { 
+							"value": "0xc0a80c02",
+							"mask": "0xFFFFFFFF"
+						},
+						"tcp.src": {
+							"value": "0x2706",
+							"mask": "0xFFFF"
+						}
+					}
+				}
+			]
+		}
+        }
+}
+
